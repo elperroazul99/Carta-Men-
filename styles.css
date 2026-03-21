@@ -1,0 +1,160 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  font-family: 'Arial', sans-serif;
+
+  /* Fondo con imagen en lugar de color */
+  background-image: url("fondo2.jpg"); /* reemplaza con tu archivo */
+  background-repeat: no-repeat;
+  background-size: cover;             /* la imagen cubre toda la pantalla */
+  background-position: center center; /* centrada */
+  background-attachment: fixed;       /* se queda fija al hacer scroll */
+
+  color: #f5f5dc; /* mantiene el color de texto original */
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: #222;
+  color: #ffa500;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.menu-section {
+  padding: 20px;
+  position: relative;
+}
+
+.menu-section h2 {
+  color: #ffa500;
+  border-bottom: 2px solid #ffa500;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.menu-content {
+  display: block; /* oculto por defecto, se despliega con JS */
+}
+
+.menu-item {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-item p {
+  margin: 0;
+  flex: 1;
+}
+
+.price {
+  color: #ffa500;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Galería con logo a la izquierda y papas en esquina superior derecha */
+.gallery {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.gallery img[alt="Logo"] {
+  width: 150px;
+  height: auto;
+  margin-left: 20px;
+}
+
+.gallery img[alt="papas"] {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 150px;
+  height: auto;
+}
+.gallery img[alt="piña"] {
+  position: absolute;
+  top: 10px;      /* distancia desde arriba */
+  right: 10px;    /* esquina derecha */
+  width: 120px;
+  height: auto;
+}
+
+/* Botones Bar y Cocina */
+.botones {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 0; /* sin separación entre botones */
+}
+
+.botones button {
+  flex: 1; /* ocupan el mismo espacio */
+  border: none;
+  padding: 20px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #ffa500;
+  color: #111;
+  border-radius: 0; /* forma cuadrada */
+}
+
+.botones button:hover {
+  background-color: #ff7f00;
+}
+
+/* Submenú de Cocina estilo acordeón */
+.submenu {
+  display: none; /* oculto por defecto */
+  flex-direction: column;
+  margin: 0;
+  gap: 10px;
+  background-color: #222;
+  padding: 10px;
+}
+
+.submenu button {
+  background-color: #333;
+  color: #ffa500;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.submenu button:hover {
+  background-color: #444;
+}
+
+/* Ajuste especial para Bebidas */
+.bebidas {
+  padding-bottom: 200px;
+  position: relative;
+}
+
+.bebidas .pollo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 150px;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #222;
+  color: #ffa500;
+}
