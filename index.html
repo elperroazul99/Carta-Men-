@@ -3,96 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carta Digital</title>
+  <title>Casa Zuleida&Viñola - Carta Digital</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body id="cuerpo-pagina">
   <header>Casa Zuleida&Viñola</header>
 
   <div class="gallery">
-    <img src="logo.png" alt="Logo">
-    <img src="papas.png" alt="papas">
+    <img src="logo.png" alt="Logo Izquierdo">
+    <img src="logo.png" id="img-dinamica" alt="Decoración Dinámica">
   </div>
 
-  <!-- Botones Bar y Cocina -->
   <div class="botones">
-    <button class="btn-bar" onclick="mostrarBar()">Bar</button>
+    <button class="btn-bar" onclick="mostrarSeccion('seccion-bar')">Bar</button>
     <button class="btn-cocina" onclick="toggleSubmenu()">Cocina</button>
   </div>
 
-  <!-- Submenú de Cocina (oculto por defecto en CSS) -->
   <div id="submenu-cocina" class="submenu">
-    <button onclick="mostrarHome()">Home</button>
-    <button onclick="mostrarPrincipal()">Plato Principal</button>
-    <button onclick="mostrarComidaLigera()">Comida ligera</button>
-    <button onclick="mostrarPostres()">Postres</button>
+    <button onclick="mostrarSeccion('seccion-home')" class="btn-home-sub">🏠 INICIO (Ofertas)</button>
+    <button onclick="mostrarSeccion('seccion-cocina-principal')">Plato Principal</button>
+    <button onclick="mostrarSeccion('seccion-cocina-ligera')">Comida Ligera</button>
+    <button onclick="mostrarSeccion('seccion-cocina-postres')">Postres</button>
   </div>
 
-  <!-- Contenedor dinámico para las ofertas -->
-  <div id="ofertas"></div>
+  <main id="contenedor-menu">
+    
+    <section id="seccion-home" class="menu-pagina active">
+      <div class="cargando" style="text-align: center; padding: 20px;">Cargando menú...</div>
+    </section>
 
-  <!-- Carta completa inicial -->
-  <section class="menu-section">
-    <h2>Entrantes</h2>
-    <div class="menu-content">
-      <div class="menu-item"><p>Coctel de camarón</p><span class="price">$6.50</span></div>
-      <div class="menu-item"><p>Coctel de atún</p><span class="price">$5.35</span></div>
-      <div class="menu-item"><p>Sopa Tradiciolal</p><span class="price">$2.10</span></div>
-      <div class="menu-item"><p>Ensalada fria de la casa</p><span class="price">$4.50</span></div>
-      <div class="menu-item"><p>Entremés de jamón y queso</p><span class="price">$5.50</span></div>
-    </div>
-  </section>
+    <section id="seccion-cocina-principal" class="menu-pagina"></section>
 
-  <section class="menu-section">
-    <h2>Pollo</h2>
-    <div class="menu-content">
-      <div class="menu-item"><p>Punta de pollo</p><span class="price">$12.00</span></div>
-      <div class="menu-item"><p>Suprema de pollo</p><span class="price">$13.00</span></div>
-      <div class="menu-item"><p>Pollo frito</p><span class="price">$11.50</span></div>
-      <div class="menu-item"><p>Bistec de pollo</p><span class="price">$12.50</span></div>
-      <div class="menu-item"><p>Bistec de pollo gratinado</p><span class="price">$13.50</span></div>
-    </div>
-  </section>
-  
-  <section class="menu-section">
-    <h2>Cerdo</h2>
-    <div class="menu-content">
-      <div class="menu-item"><p>Punta de cerdo grillé</p><span class="price">$11.50</span></div>
-      <div class="menu-item"><p>Bistec de cerdo</p><span class="price">$11.00</span></div>
-      <div class="menu-item"><p>Bistec de cerdo gratinado</p><span class="price">$13.50</span></div>
-      <div class="menu-item"><p>Bistec de cerdo empanado</p><span class="price">$12.20</span></div>
-      <div class="menu-item"><p>Cerdo asado buffet</p><span class="price">$15.00</span></div>
-    </div>
-  </section>
-  
-  <section class="menu-section">
-    <h2>Asado al carbón</h2>
-    <div class="menu-content">
-      <div class="menu-item"><p>Pescado</p><span class="price">$15.00</span></div>
-      <div class="menu-item"><p>Pollo</p><span class="price">$12.50</span></div>
-      <div class="menu-item"><p>Cerdo</p><span class="price">$12.50</span></div>
-      <div class="menu-item"><p>Camarón</p><span class="price">$12.50</span></div>
-      <div class="menu-item"><p>Res</p><span class="price">$14.50</span></div>
-      <div class="menu-item"><p>Brocheta de carne</p><span class="price">$17.00</span></div>
-    </div>
-  </section>
-  
-  <section class="menu-section">
-    <h2>Brochetas</h2>
-    <div class="menu-content">
-      <div class="menu-item"><p>Brocheta de carne</p><span class="price">$11.50</span></div>
-      <div class="menu-item"><p>Punta de cerdo grillé</p><span class="price">$11.50</span></div>
-    </div>
-  </section>
-  
-  <section class="menu-section bebidas">
-    <h2>Res</h2>
-    <div class="menu-content">
-      <div class="menu-item"><p>Ropa vieja de res</p><span class="price">$13.50</span></div>
-      <div class="menu-item"><p>Bistec grille</p><span class="price">$13.00</span></div>
-    </div>
-    <img class="pollo" src="pollo-frito1.png" alt="Pollo Frito">
-  </section>
+    <section id="seccion-cocina-ligera" class="menu-pagina"></section>
+
+    <section id="seccion-cocina-postres" class="menu-pagina"></section>
+
+    <section id="seccion-bar" class="menu-pagina"></section>
+
+  </main>
 
   <script src="script.js"></script>
 </body>
