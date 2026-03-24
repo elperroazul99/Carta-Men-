@@ -1,273 +1,157 @@
+/**
+ * CONFIGURACIÓN DE GOOGLE SHEETS
+ */
+const SHEET_ID = '1tutxK1Yf1jyT7ww5RpeuILKBqhU4ibi1hxlaOr3gefk';
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
+/**
+ * Carga los datos desde Google Sheets al iniciar
+ */
+async function cargarMenu() {
+  try {
+    const response = await fetch(SHEET_URL);
+    const text = await response.text();
+    const data = JSON.parse(text.substr(47).slice(0, -2));
+    const filas = data.table.rows;
 
-// --- Función para mostrar las ofertas del Bar ---
-function mostrarBar() {
-  document.body.innerHTML = `
-  <div class="gallery">
-   <img src="logo.png" alt="Logo">
-   <img src="piña-colada.png" alt="piña">
-  </div>
-    <div class="botones">
-      <button class="btn-bar" onclick="mostrarBar()">Bar</button>
-      <button class="btn-cocina" onclick="toggleSubmenu()">Cocina</button>
-    </div>
-    <div id="submenu-cocina" class="submenu">
-      <button onclick="mostrarPrincipal()">Menú Principal</button>
-      <button onclick="mostrarComidaLigera()">Comida ligera</button>
-      <button onclick="mostrarCenas()">Cenas</button>
-    </div>
-    <section class="menu-section">
-      <h2>Cocteles</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Mojito</p><span class="price">$3.00</span></div>
-        <div class="menu-item"><p>Cuba Libre</p><span class="price">$3.00</span></div>
-        <div class="menu-item"><p>Piña Colada</p><span class="price">$3.00</span></div>
-        <div class="menu-item"><p>Daiquirí</p><span class="price">$3.00</span></div>
-        <div class="menu-item"><p>Cubata</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Ron Collin</p><span class="price">$3.00</span></div>
-        <div class="menu-item"><p>Tinto de verano</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Sangria Tropical</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Michelafa/Cerveza Importada</p><span class="price">$3.50</span></div>
-        <div class="menu-item"><p>Michelada/Cerveza nacional</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Gin Tonic</p><span class="price">$3.50</span></div>
-        <div class="menu-item"><p>Blody Mary</p><span class="price">$3.50</span></div>
-        <div class="menu-item"><p>Caipiriña</p><span class="price">$5.50</span></div>
-        <div class="menu-item"><p>Caipiroska</p><span class="price">$5.50</span></div>
-        <div class="menu-item"><p>Margarita</p><span class="price">$5.50</span></div>
-        <div class="menu-item"><p>Canchanchara</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Cubanito</p><span class="price">$4.00</span></div>
-      </div>
-    </section>
-    <section class="menu-section">
-      <h2>Jugos y otros</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Jugo de Frutas Tropicales</p><span class="price">$2.10</span></div>
-        <div class="menu-item"><p>Limonada Natural</p><span class="price">$2.20</span></div>
-        <div class="menu-item"><p>Limonada Frappe</p><span class="price">$2.30</span></div>
-        <div class="menu-item"><p>Batido de Chocolate</p><span class="price">$3.70</span></div>
-        <div class="menu-item"><p>Batido de Frutas Tropicales</p><span class="price">$3.60</span></div>
-      </div>
-    </section>
-    <section class="menu-section">
-      <h2>Agua Mineral</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Agua Mineral(500 ML)</p><span class="price">$1.50</span></div>
-        <div class="menu-item"><p>Agua Mineral(1500 ML)</p><span class="price">$3.30</span></div>
-    </section>
-    <section class="menu-section">
-      <h2>Agua Mineral Carbonatada</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Agua mimeral carbomatada(500 ML)</p><span class="price">$1.50</span></div>
-        <div class="menu-item"><p>Agua mineral carbonatada(1500 ML)</p><span class="price">$3.30</span></div>
-        <div class="menu-item"><p>Agua Tonica</p><span class="price">$2.00</span></div>
-    </section>
-    <section class="menu-section">
-      <h2>Cerveza Nacional</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Cerveza Cristal</p><span class="price">$3.00</span></div>
-        <div class="menu-item"><p>Cerveza Cristal Extra</p><span class="price">$3.00</span></div>
-        <div class="menu-item"><p>Bucanero</p><span class="price">$3.00</span></div>
-      </div>
-    </section>
-    <section class="menu-section">
-      <h2>Cerveza Importada</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Cerveza Heinequen</p><span class="price">$3.00</span></div>
-        <div class="menu-item"><p>Cerveza Corona</p><span class="price">$2.20</span></div>
-        <div class="menu-item"><p>Cerveza Presidente</p><span class="price">$3.00</span></div>
-    </section>
-    <section class="menu-section">
-      <h2>Botellas de avino</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Vino Tinto Viña Lanzar</p><span class="price">$30.00</span></div>
-        <div class="menu-item"><p>Vino Tinto Finca del Viso</p><span class="price">$30.0</span></div>
-        <div class="menu-item"><p>Vino Blanco Finca del Viso</p><span class="price">$30.00</span></div>
-    </section>
-    <section class="menu-section">
-      <h2>Copas de Vino</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Blanco</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Rosado</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Tinto</p><span class="price">$4.30</span></div>
-        <div class="menu-item"><p>Tinto especial (Gato Negro)</p><span class="price">$7.00</span></div>
-    </section>
-    <section class="menu-section">
-      <h2>Café y Té</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Café expresso</p><span class="price">$1.30</span></div>
-        <div class="menu-item"><p>Café Americano</p><span class="price">$1.60</span></div>
-        <div class="menu-item"><p>Café con Leche</p><span class="price">$3.00</span></div>
-        <div class="menu-item"><p>Café Capuchino</p><span class="price">$2.50</span></div>
-        <div class="menu-item"><p>Café Caragillo</p><span class="price">$4.50</span></div>
-        <div class="menu-item"><p>Café Cortada</p><span class="price">$2.50</span></div>
-        <div class="menu-item"><p>Té</p><span class="price">$1.30</span></div>
-    </section>
-    <section class="menu-section">
-      <h2>Ron Habana Club ( Tragos )</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Seleccion De Maestros</p><span class="price">$9.00</span></div>
-        <div class="menu-item"><p>7 Años</p><span class="price">$6.00</span></div>
-        <div class="menu-item"><p>Ritual</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Añejo Espesial</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Añejo Reserva</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Añejo Blanco</p><span class="price">$3.00</span></div>
-        <div class="menu-item"><p>Pacto Navío</p><span class="price">$9.00</span></div>
-    </section>
-    <section class="menu-section">
-      <h2>Ron Santiago ( Tragos )</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>8 Años</p><span class="price">$7.00</span></div>
-        <div class="menu-item"><p>12 Años extra seco</p><span class="price">$8.00</span></div>
-        <div class="menu-item"><p>11 Años</p><span class="price">$9.00</span></div>
-        <div class="menu-item"><p>Añejo</p><span class="price">$4.00</span></div>
-        <div class="menu-item"><p>Añejo Banco</p><span class="price">$3.00</span></div>
-    </section>
-    <section class="menu-section">
-      <h2>Otros Destilados ( Tragos )</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Black Label</p><span class="price">$9.00</span></div>
-        <div class="menu-item"><p>Vodka</p><span class="price">$5.00</span></div>
-        <div class="menu-item"><p>Tequila</p><span class="price">$5.00</span></div>
-        <div class="menu-item"><p>Wisky</p><span class="price">$5.00</span></div>
-        <div class="menu-item"><p>Ginebra</p><span class="price">$3.00</span></div>
-    </section>
-  `;
-}
-// --- Función para desplegar/ocultar el submenú de Cocina ---
-function toggleSubmenu() {
-  const submenu = document.getElementById('submenu-cocina');
-  if (submenu.style.display === 'flex') {
-    submenu.style.display = 'none';
-  } else {
-    submenu.style.display = 'flex';
+    const items = filas.map(fila => ({
+      seccion: fila.c[0]?.v || '',
+      categoria: fila.c[1]?.v || '',
+      nombre: fila.c[2]?.v || '',
+      precio: fila.c[3]?.v || ''
+    }));
+
+    // Renderizamos cada sección de la página
+    renderizarHome(items);
+    renderizarSeccion(items, 'seccion-bar');
+    renderizarSeccion(items, 'seccion-cocina-principal');
+    renderizarSeccion(items, 'seccion-cocina-ligera');
+    renderizarSeccion(items, 'seccion-cocina-postres');
+
+  } catch (error) {
+    console.error("Error cargando el menú desde Google Sheets:", error);
   }
 }
 
-// --- Función para restaurar el menú principal completo ---
-function mostrarPrincipal() {
-  document.body.innerHTML = `
-    <header>Casa Zuleida&Viñola</header>
-    <div class="gallery">
-      <img src="logo.png" alt="Logo">
-      <img src="papas.png" alt="papas">
-    </div>
-    <div class="botones">
-      <button class="btn-bar" onclick="mostrarBar()">Bar</button>
-      <button class="btn-cocina" onclick="toggleSubmenu()">Cocina</button>
-    </div>
-    <div id="submenu-cocina" class="submenu">
-      <button onclick="mostrarPrincipal()">Plato Principal</button>
-      <button onclick="mostrarComidaLigera()">Comida ligera</button>
-      <button onclick="mostrarCenas()">Cenas</button>
-    </div>
+/**
+ * Renderiza la sección de INICIO (Recomendación y Más Vendidos)
+ */
+function renderizarHome(items) {
+  const contenedor = document.getElementById('seccion-home');
+  if (!contenedor) return;
 
-    <!-- Carta completa -->
-    <section class="menu-section">
-      <h2 class="toggle">Entrantes</h2>
-      <div class="menu-content">
-        <div class="menu-item"><p>Coctel de camarón</p><span class="price">$6.50</span></div>
-        <div class="menu-item"><p>Coctel de atún</p><span class="price">$5.35</span></div>
-        <div class="menu-item"><p>Sopa Tradiciolal</p><span class="price">$2.10</span></div>
-        <div class="menu-item"><p>Ensalada fria de la casa</p><span class="price">$4.50</span></div>
-        <div class="menu-item"><p>Entremés de jamón y queso</p><span class="price">$5.50</span></div>
-      </div>
-    </section>
+  const itemsHome = items.filter(i => i.seccion === 'seccion-home');
+  const recomendacion = itemsHome.find(i => i.categoria === 'RECOMENDACIÓN');
+  const masVendidos = itemsHome.filter(i => i.categoria === 'MÁS VENDIDOS');
 
-    <section class="menu-section">
-      <h2 class="toggle">Pollo</h2>
-      <div class="menu-content">
-        <div class="menu-item"><p>Punta de pollo</p><span class="price">$12.00</span></div>
-        <div class="menu-item"><p>Suprema de pollo</p><span class="price">$13.00</span></div>
-        <div class="menu-item"><p>Pollo frito</p><span class="price">$11.50</span></div>
-        <div class="menu-item"><p>Bistec de pollo</p><span class="price">$12.50</span></div>
-        <div class="menu-item"><p>Bistec de pollo gratinado</p><span class="price">$13.50</span></div>
-      </div>
-    </section>
+  let html = '';
+  
+  if (recomendacion) {
+    html += `
+      <div class="oferta-dia">
+        <span class="badge" style="background:#000; color:#ffa500; padding:2px 10px; border-radius:5px; font-size:0.8em;">RECOMENDACIÓN DEL DÍA</span>
+        <div class="menu-item-especial">
+          <p style="font-size:1.2em; margin:10px 0;">${recomendacion.nombre}</p>
+          <span class="price" style="font-size:1.5em;">${recomendacion.precio}</span>
+        </div>
+      </div>`;
+  }
 
-    <section class="menu-section">
-      <h2 class="toggle">Cerdo</h2>
-      <div class="menu-content">
-        <div class="menu-item"><p>Punta de cerdo grillé</p><span class="price">$11.50</span></div>
-        <div class="menu-item"><p>Bistec de cerdo</p><span class="price">$11.00</span></div>
-        <div class="menu-item"><p>Bistec de cerdo gratinado</p><span class="price">$13.50</span></div>
-        <div class="menu-item"><p>Bistec de cerdo empanado</p><span class="price">$12.20</span></div>
-        <div class="menu-item"><p>Cerdo asado buffet</p><span class="price">$15.00</span></div>
-      </div>
-    </section>
-
-    <section class="menu-section">
-      <h2 class="toggle">Asado al carbón</h2>
-      <div class="menu-content">
-        <div class="menu-item"><p>Pescado</p><span class="price">$15.00</span></div>
-        <div class="menu-item"><p>Pollo</p><span class="price">$12.50</span></div>
-        <div class="menu-item"><p>Cerdo</p><span class="price">$12.50</span></div>
-        <div class="menu-item"><p>Camarón</p><span class="price">$12.50</span></div>
-        <div class="menu-item"><p>Res</p><span class="price">$14.50</span></div>
-        <div class="menu-item"><p>Brocheta de carne</p><span class="price">$17.00</span></div>
-      </div>
-    </section>
-
-    <section class="menu-section">
-      <h2 class="toggle">Brochetas</h2>
-      <div class="menu-content">
-        <div class="menu-item"><p>Brocheta de carne</p><span class="price">$11.50</span></div>
-        <div class="menu-item"><p>Punta de cerdo grillé</p><span class="price">$11.50</span></div>
-      </div>
-    </section>
-
-    <section class="menu-section bebidas">
-      <h2 class="toggle">Res</h2>
-      <div class="menu-content">
-        <div class="menu-item"><p>Ropa vieja de res</p><span class="price">$13.50</span></div>
-        <div class="menu-item"><p>Bistec grille</p><span class="price">$13.00</span></div>
-      </div>
-      <img class="pollo" src="pollo-frito1.png" alt="Pollo Frito">
-    </section>
-  `;
-
-  activarToggle(); // reaplicar acordeón
-}
-// --- Función para mostrar Comida ligera ---
-function mostrarComidaLigera() {
-  document.body.innerHTML = `
-    <header>Casa Zuleida&Viñola</header>
-    <div class="gallery"><img src="logo.png" alt="Logo"></div>
-    <div class="botones">
-      <button class="btn-bar" onclick="mostrarBar()">Bar</button>
-      <button class="btn-cocina" onclick="toggleSubmenu()">Cocina</button>
-    </div>
-    <div id="submenu-cocina" class="submenu">
-      <button onclick="mostrarPrincipal()"><Plato Principal</button>
-      <button onclick="mostrarComidaLigera()">Comida ligera</button>
-      <button onclick="mostrarCenas()">Postres</button>
-    </div>
-    <section class="menu-section">
-      <h2>Pizza</h2>
-      <div class="menu-content" style="display:block;">
-        <div class="menu-item"><p>Pizza Napolitana</p><span class="price">$5.30</span></div>
-        <div class="menu-item"><p>Cerveza Corona</p><span class="price">$2.20</span></div>
-        <div class="menu-item"><p>Cerveza Presidente</p><span class="price">$3.00</span></div>
-    </section>
-  `;
+  if (masVendidos.length > 0) {
+    html += `<div class="menu-section"><h2 style="text-align: center;">🔥 LOS MÁS VENDIDOS</h2>`;
+    masVendidos.forEach(item => {
+      html += `
+        <div class="menu-item">
+          <p>${item.nombre}</p>
+          <span class="price">${item.precio}</span>
+        </div>`;
+    });
+    html += `</div>`;
+  }
+  
+  contenedor.innerHTML = html;
 }
 
-// --- Función para mostrar Cenas ---
-function mostrarCenas() {
-  document.body.innerHTML = `
-    <header>Casa Zuleida&Viñola</header>
-    <div class="gallery"><img src="logo.png" alt="Logo"></div>
-    <div class="botones">
-      <button class="btn-bar" onclick="mostrarBar()">Bar</button>
-      <button class="btn-cocina" onclick="toggleSubmenu()">Cocina</button>
-    </div>
-    <div id="submenu-cocina" class="submenu">
-      <button onclick="mostrarPrincipal()">Plato Principal</button>
-      <button onclick="mostrarComidaLigera()">Comida ligera</button>
-      <button onclick="mostrarCenas()">Postres</button>
-    </div>
-    <section class="menu-section">
-      <h2>Postres</h2>
-      <p>Aquí pondremos las opciones de cenas.</p>
-    </section>
-  `;
+/**
+ * Renderiza las secciones generales (Bar, Platos, etc.)
+ */
+function renderizarSeccion(todosLosItems, idContenedor) {
+  const contenedor = document.getElementById(idContenedor);
+  if (!contenedor) return;
+
+  const itemsSeccion = todosLosItems.filter(i => i.seccion === idContenedor);
+  const categorias = [...new Set(itemsSeccion.map(i => i.categoria))];
+
+  let html = '';
+  
+  // Nota especial para platos principales (como estaba en tu HTML original)
+  if (idContenedor === 'seccion-cocina-principal') {
+      html += `<div class="menu-section"><h2>Todos los platos prinsipales se acompañan con guarnicion de arróz, viandas y ensalada</h2></div>`;
+  }
+
+  categorias.forEach(cat => {
+    html += `<div class="menu-section"><h2>${cat}</h2>`;
+    itemsSeccion.filter(i => i.categoria === cat).forEach(item => {
+      html += `
+        <div class="menu-item">
+          <p>${item.nombre}</p>
+          <span class="price">${item.precio}</span>
+        </div>`;
+    });
+    html += `</div>`;
+  });
+  
+  contenedor.innerHTML = html;
 }
+
+/**
+ * CONTROL DE NAVEGACIÓN (Tu código original mejorado)
+ */
+function mostrarSeccion(idSeccion) {
+  const secciones = document.querySelectorAll('.menu-pagina');
+  secciones.forEach(sec => sec.classList.remove('active'));
+
+  const seleccionada = document.getElementById(idSeccion);
+  if (seleccionada) seleccionada.classList.add('active');
+
+  // Cambio de Fondo
+  let urlFondo = "";
+  switch (idSeccion) {
+    case 'seccion-home': urlFondo = "url('fondo2.jpg')"; break;
+    case 'seccion-bar': urlFondo = "url('fondo-bar.jpg')"; break;
+    case 'seccion-cocina-principal': urlFondo = "url('fondo1.jpg')"; break;
+    case 'seccion-cocina-ligera': urlFondo = "url('fondo.jpg')"; break;
+    case 'seccion-cocina-postres': urlFondo = "url('fondo-postre.jpg')"; break;
+    default: urlFondo = "url('fondo-home.jpg')";
+  }
+
+  const style = document.getElementById('dynamic-bg') || document.createElement('style');
+  style.id = 'dynamic-bg';
+  style.innerHTML = `body::before { background-image: ${urlFondo} !important; }`;
+  if (!document.getElementById('dynamic-bg')) document.head.appendChild(style);
+
+  // Cambio de Imagen Derecha
+  const imgDinamica = document.getElementById('img-dinamica');
+  if (imgDinamica) {
+      switch (idSeccion) {
+        case 'seccion-home': imgDinamica.src = 'Cocinero.png'; break;
+        case 'seccion-bar': imgDinamica.src = 'piña-colada.png'; break;
+        case 'seccion-cocina-principal': imgDinamica.src = 'comida.png'; break;
+        case 'seccion-cocina-ligera': imgDinamica.src = 'papas.png'; break;
+        case 'seccion-cocina-postres': imgDinamica.src = 'postres.png'; break;
+        default: imgDinamica.src = 'Cocinero.png';
+      }
+  }
+
+  document.getElementById('submenu-cocina').style.display = 'none';
+}
+
+function toggleSubmenu() {
+  const submenu = document.getElementById('submenu-cocina');
+  submenu.style.display = (submenu.style.display === 'flex') ? 'none' : 'flex';
+}
+
+window.onload = () => {
+  cargarMenu(); // Carga los datos del Excel
+  mostrarSeccion('seccion-home'); // Muestra el inicio
+};
